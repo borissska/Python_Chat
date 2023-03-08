@@ -1,34 +1,33 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from datetime import datetime
 
 app = Flask(__name__, static_folder="./client", template_folder="./client")  # Настройки приложения
 
 msg_id = 1
 all_messages = []
-all_senders = []
+all_users = []
 
 
-def add_message(sender, text):
+def add_message(user, text):
     global msg_id
     new_message = {
         "msg_id": msg_id,
-        "sender": sender,
+        "user": user,
         "text": text,
         "time": datetime.now().strftime("%H:%M")
     }
     msg_id += 1
     with open("messages.txt", "a") as file:
-        file.write(f"{new_message}")
+        file.write(f'{new_message["msg_id"]}. {new_message["time"]} - {new_message["user"]}: {new_message["text"]}')
         file.write("\n")
 
     all_messages.append(new_message)
 
 
-def add_sender(sender):
-    if sender in all_senders:
-        pass
-    else:
-        all_senders.append(sender)
+@app.route("/add_user")
+def add_user():
+    user = request.args["user"]
+    all_users.append(user)
 
 
 @app.route("/chat")
@@ -36,7 +35,6 @@ def chat_page():
     return render_template("chat.html")
 
 
-# API для получения списка сообщений
 @app.route("/get_messages")
 def get_messages():
     after = int(request.args["after"])
@@ -50,26 +48,22 @@ def get_messages():
         return {"messages": all_messages}
 
 
-@app.route("/get_senders")
-def get_senders():
-    return {"senders": all_senders}
+@app.route("/get_users")
+def get_users():
+    return {"users": all_users}
 
 
-# HTTP-GET
-# API для получения отправки сообщения  /send_message?sender=Mike&text=Hello
 @app.route("/send_message")
 def send_message():
-    sender = request.args["sender"]
+    user = request.args["user"]
     text = request.args["text"]
-    add_message(sender, text)
-    add_sender(sender)
+    add_message(user, text)
     return {"result": True}
 
 
-# Главная страница
 @app.route("/")
-def hello_page():
-    return "New text goes here"
+def start_page():
+    return redirect("/chat", code=302)
 
 
 app.run()

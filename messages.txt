@@ -1,8 +1,11 @@
 
-{'msg_id': 3, 'sender': 'dwadsadf', 'text': 'fdsafeawsfw', 'time': '18:06'}
-{'msg_id': 4, 'sender': 'dwadsadf', 'text': 'bfdgbfd', 'time': '18:07'}
-{'msg_id': 5, 'sender': 'Boris', 'text': 'Привет', 'time': '18:08'}
-{'msg_id': 6, 'sender': 'Roman', 'text': 'Hello', 'time': '18:09'}
-{'msg_id': 1, 'sender': 'feafwefgergre', 'text': 'greagregre', 'time': '00:28'}
-{'msg_id': 2, 'sender': 'fsfaefwfewf', 'text': 'gdfgbsdbvccx', 'time': '00:29'}
-{'msg_id': 3, 'sender': 'fsfaefwfewf', 'text': 'gregreg', 'time': '00:30'}
+1. 02:00 - gregfdgf: gregegr
+1. 02:26 - fewfw: fsgfrggr
+2. 02:26 - greggrtegt: trhhtrhtthr
+1. 02:29 - fewfewfewf: asgfregreg
+1. 03:12 - fbdbfgdnhgnhgn: thrhtrtrhhtr
+2. 03:12 - gregregergre: thhththrehttrh
+1. 03:15 - htrhtrhrtht: wefgrethgthr
+2. 03:15 - gfrewgrgrte: htrthrtrge
+1. 03:23 - fwfewfew: htghtfgghf
+2. 03:23 - fewfewfdsgrgtrg: gregrtegrhtyr
