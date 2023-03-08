@@ -1,0 +1,8 @@
+
+{'msg_id': 3, 'sender': 'dwadsadf', 'text': 'fdsafeawsfw', 'time': '18:06'}
+{'msg_id': 4, 'sender': 'dwadsadf', 'text': 'bfdgbfd', 'time': '18:07'}
+{'msg_id': 5, 'sender': 'Boris', 'text': 'Привет', 'time': '18:08'}
+{'msg_id': 6, 'sender': 'Roman', 'text': 'Hello', 'time': '18:09'}
+{'msg_id': 1, 'sender': 'feafwefgergre', 'text': 'greagregre', 'time': '00:28'}
+{'msg_id': 2, 'sender': 'fsfaefwfewf', 'text': 'gdfgbsdbvccx', 'time': '00:29'}
+{'msg_id': 3, 'sender': 'fsfaefwfewf', 'text': 'gregreg', 'time': '00:30'}
