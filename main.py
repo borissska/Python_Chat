@@ -24,10 +24,20 @@ def add_message(user, text):
     all_messages.append(new_message)
 
 
+@app.route("/delete_message")
+def delete_message():
+    message_id = int(request.args["id"])
+    for message in all_messages:
+        if message["msg_id"] == message_id:
+            all_messages.remove(message)
+    return {"result": True}
+
+
 @app.route("/add_user")
 def add_user():
     user = request.args["user"]
     all_users.append(user)
+    return {"result": True}
 
 
 @app.route("/chat")

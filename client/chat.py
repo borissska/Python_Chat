@@ -4,6 +4,7 @@ import json
 import js
 
 users_list = []
+message_list = []
 last_seen_id = 0
 send_message = js.document.getElementById("send_message")
 join_conversation = js.document.getElementById("join_conversation")
@@ -31,17 +32,27 @@ def set_timeout(delay, callback):
 
 
 def append_message(message):
+    message_list.append(message)
     item = js.document.createElement("li")
     item.className = "list-group-item"
+    item.id = f'message_{message["msg_id"]}'
     item.innerHTML = f'[<b>{message["user"]}</b>]: <span>{message["text"]}</span>' \
                      f'<span class="badge text-bg-light text-secondary">{message["time"]}</span>'
+
     if message['user'] == user.value:
-        removeButton = js.document.createElement("a")
-        removeButton.className = "btn btn-primary"
-        removeButton.id = message["msg_id"]
-        removeButton.innerHTML = "Удалить"
-        item.append(removeButton)
+        delete_button = js.document.createElement("a")
+        delete_button.className = "btn btn-primary"
+        delete_button.id = message["msg_id"]
+        delete_button.innerHTML = "Удалить"
+        delete_button.onclick = delete_message_click
+        item.append(delete_button)
+
     chat_window.prepend(item)
+
+
+async def delete_message_click(e):
+    message_id = e.target.id
+    await fetch(f"/delete_message?id={message_id}", method="GET")
 
 
 async def send_message_click(e):
@@ -69,9 +80,20 @@ async def load_fresh_messages():
 
     data = await result_messages.json()
     all_messages = data["messages"]
-    for msg in all_messages:
-        last_seen_id = msg["msg_id"]
-        append_message(msg)
+
+    for message in all_messages:
+        last_seen_id = message["msg_id"]
+        append_message(message)
+
+    result_messages = await fetch(f"/get_messages?after={0}", method="GET")
+    data = await result_messages.json()
+    all_messages = data["messages"]
+
+    for message in message_list:
+        if message not in all_messages:
+            message_list.remove(message)
+            message_block = js.document.getElementById(f'message_{message["msg_id"]}')
+            message_block.remove()
     set_timeout(1, load_fresh_messages)
 
 
