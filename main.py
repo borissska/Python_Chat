@@ -4,6 +4,7 @@ from datetime import datetime
 app = Flask(__name__, static_folder="./client", template_folder="./client")  # Настройки приложения
 
 msg_id = 1
+user_id = 1
 all_messages = []
 all_users = []
 
@@ -14,7 +15,7 @@ def add_message(user, text):
         "msg_id": msg_id,
         "user": user,
         "text": text,
-        "time": datetime.now().strftime("%H:%M")
+        "time": datetime.now()
     }
     msg_id += 1
     with open("messages.txt", "a") as file:
@@ -35,8 +36,16 @@ def delete_message():
 
 @app.route("/add_user")
 def add_user():
+    global user_id
     user = request.args["user"]
-    all_users.append(user)
+    new_user = {
+        "msg_id": user_id,
+        "name": user,
+        "time": datetime.now()
+    }
+    user_id += 1
+
+    all_users.append(new_user)
     return {"result": True}
 
 

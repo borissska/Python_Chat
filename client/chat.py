@@ -1,4 +1,6 @@
 import asyncio
+import datetime
+
 from pyodide.http import pyfetch
 import json
 import js
@@ -68,22 +70,24 @@ async def load_fresh_messages():
     users_data = await result_users.json()
     connected_users = users_data["users"]
     for connected_user in connected_users:
-        if connected_user not in users_list:
+        if connected_user["name"] not in users_list:
             item = js.document.createElement("span")
-            if connected_user == user.value:
+            if connected_user["name"] == user.value:
                 item.className = "input-group-text fw-bold"
             else:
                 item.className = "input-group-text"
-            item.innerHTML = f'{connected_user}'
+            item.innerHTML = f'{connected_user["name"]}'
             users.append(item)
-            users_list.append(connected_user)
+            users_list.append(connected_user["name"])
 
     data = await result_messages.json()
     all_messages = data["messages"]
 
     for message in all_messages:
-        last_seen_id = message["msg_id"]
-        append_message(message)
+        for user_now in connected_users:
+            if (user_now["name"] == user.value) and (message["time"] > user_now["time"]):
+                last_seen_id = message["msg_id"]
+                append_message(message)
 
     result_messages = await fetch(f"/get_messages?after={0}", method="GET")
     data = await result_messages.json()
